@@ -10,7 +10,12 @@
 ## Domain
 
 <!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
-
+The domain I chose is based on student reviews of different professors in Computer Science at Arizona State University.
+This knowledge is valuable and hard to find through official kind of knowledge, which are official university resources do not
+highlight real course experience from students based on the teaching style of their professor, workload, exams, grading, and course expectations. 
+Real kind of knowledge, like Rate My Professor reviews, uncover the true knowledge or information about a professor and the course under a professor,
+along with those other aspects, and this RAG system will make the knowledge from these student reviews searchable so that other students can get
+accurate and precise information about professors while getting more grounded answers based on reviews. 
 ---
 
 ## Documents
