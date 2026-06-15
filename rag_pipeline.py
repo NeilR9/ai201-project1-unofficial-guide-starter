@@ -74,28 +74,3 @@ def load_file_and_chunk_text(folder_path):
                 })
 
     return chunks, professors
-
-
-# Example usage
-chunks, profs = load_file_and_chunk_text("milestone1Doc")
-
-print("First chunks for FIrst 5 Profs:\n")
-for curProf in profs[0:5]:
-    chunk = next(
-        c for c in chunks
-        if c["professor"] == curProf
-    )
-    print(f"Professor: {chunk['professor']}")
-    print(f"Review #: {chunk['review_number']}")
-    print(f"Text: {chunk['text']}")
-    print("-" * 80)
-
-"""
-for i, chunk in enumerate(chunks[:5], start=1):
-    print(f"Chunk {i}")
-    print(f"Professor: {chunk['professor']}")
-    print(f"Review #: {chunk['review_number']}")
-    print(f"Text: {chunk['text']}")
-    print("-" * 80)
-"""
-print(f"\nTotal Chunks Created: {len(chunks)}")
