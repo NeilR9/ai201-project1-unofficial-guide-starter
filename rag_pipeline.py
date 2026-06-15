@@ -70,7 +70,8 @@ def load_file_and_chunk_text(folder_path):
                 chunks.append({
                     "professor": professor_name,
                     "review_number": int(review_num),
-                    "text": review_text
+                    "text": review_text,
+                    "source": filename
                 })
 
     return chunks, professors

@@ -25,16 +25,16 @@ accurate and precise information about professors while getting more grounded an
 
 | # | Source | Description | URL or location |
 |---|--------|-------------|-----------------|
-| 1 | Rate my Professor | Joshua Daymude reviews| https://www.ratemyprofessors.com/professor/2813800 |
-| 2 | Rate my Professor | Ryan Meuth reviews | https://www.ratemyprofessors.com/professor/1837088 |
-| 3 | Rate my Professor | David Claveau reviews | https://www.ratemyprofessors.com/professor/1674624|
-| 4 | Rate my Professor | Ming Zhao reviews| https://www.ratemyprofessors.com/professor/2095554 |
-| 5 | Rate my Professor | James Gordon reviews | https://www.ratemyprofessors.com/professor/2844149 |
-| 6 | Rate my Professor | Justin Selgrad reviews | http://ratemyprofessors.com/professor/2042001 |
-| 7 | Rate my Professor | Farideh Tadayon-Navabi reviews | https://www.ratemyprofessors.com/professor/500103 |
-| 8 | Rate my Professor | Xuerong Feng reviews | https://www.ratemyprofessors.com/professor/1167426 |
-| 9 | Rate my Professor | Subbarao Kambhampati reviews | https://www.ratemyprofessors.com/professor/1661785 |
-| 10| Rate my Professor | Bharatesh Chakravarthi reviews | https://www.ratemyprofessors.com/professor/2920261 |
+| 1 | prof1.txt | Joshua Daymude reviews| https://www.ratemyprofessors.com/professor/2813800 |
+| 2 | prof2.txt | Ryan Meuth reviews | https://www.ratemyprofessors.com/professor/1837088 |
+| 3 | prof3.txt | David Claveau reviews | https://www.ratemyprofessors.com/professor/1674624|
+| 4 | prof4.txt | Ming Zhao reviews| https://www.ratemyprofessors.com/professor/2095554 |
+| 5 | prof5.txt | James Gordon reviews | https://www.ratemyprofessors.com/professor/2844149 |
+| 6 | prof6.txt | Justin Selgrad reviews | http://ratemyprofessors.com/professor/2042001 |
+| 7 | prof7.txt | Farideh Tadayon-Navabi reviews | https://www.ratemyprofessors.com/professor/500103 |
+| 8 | prof8.txt | Xuerong Feng reviews | https://www.ratemyprofessors.com/professor/1167426 |
+| 9 | prof9.txt | Subbarao Kambhampati reviews | https://www.ratemyprofessors.com/professor/1661785 |
+| 10| prof10.txt | Bharatesh Chakravarthi reviews | https://www.ratemyprofessors.com/professor/2920261 |
 
 ---
 
