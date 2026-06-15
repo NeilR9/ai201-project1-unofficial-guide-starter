@@ -69,7 +69,7 @@ Each student review could be different from other student review within a docume
 I will be using the all-miniLM-L6-v2 via sentence-transfomers. I think this embedded model will be effective for embedding the chunks because we are dealing with chunks of short length. In addition to that, this embedding model is also optimized primarily for semantic chunking where it will find similarities semantically on sentences. 
 
 **Top-k:**
-Top-k is set to 3 since it will help us obtain relevant context that is related to our questionand closest in meaning. This prevents loosely related reviews from being retrieved that could affect the response given. 
+Top-k is set to 4 since it will help us obtain relevant context that is related to our questionand closest in meaning. This prevents loosely related reviews from being retrieved that could affect the response given. 
 
 **Production tradeoff reflection:**
 If I were deploying this for real users and cost wasn't a constrain, I would weign in accuracy on domain- specific text and latency. 

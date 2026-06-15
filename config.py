@@ -15,4 +15,4 @@ CHROMA_COLLECTION = "unnoficial-guide"
 CHROMA_PATH = "./chroma_db"
 
 # --- Retrieval ---
-N_RESULTS = 3
+N_RESULTS = 4
