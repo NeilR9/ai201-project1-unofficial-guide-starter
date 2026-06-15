@@ -56,15 +56,22 @@ accurate and precise information about professors while getting more grounded an
 
 Each document contains 10 reviews for one professor, and each reviews varies in length, roughly between 5-75 words. Each review can be very short and brief or detailed, but not too long in length. Since each review has a different word count and are self-contained, we can treat each review as one chunk so that we can preserve the contents of each student's review about a professor as the reviews can be made by different students.
 That being said, each chunk could be around 20-90 tokens.
+
 **Overlap:**
 
 The overlap size is 0.
+
 **Why these choices fit your documents:**
 
 Each student review could be different from other student review within a document, causing reviews to potentially be independent from each other. These reviews could be made from different students, and they may not be related to each other in terms of grading , workload, professor teaching style, and other factors as they could be based on different courses that had different course structures and sometimes students may have different opinions on a professor. For a worse case scenario, it would be recommended to treat each review seperately where in this case, one review would be one chunk. Each review is small in content, which is why we chose the value of chunk size to be around 20-90 tokens, and since we treat each review independently, the overlap would be 0.
+
 **Final chunk count:**
+
 Final chunk count is 100 as there are a totla of 100 review across all the 10 files.
+
+
 **5 Labeled Sample Chunks**
+
 Professor: Joshua Daymude
 Review #: 1
 Text: Dr. Daymude is one of the most talented professors at ASU. He has devised a curriculum that breaks down a complicated subject into digestible chunks in which the most important aspects are revisited at specific points in the semester. His class is not something you will forget about soon after you finish it.
@@ -96,8 +103,10 @@ Text: Hard class. Don't take if you don't want to put the effort in. Very reward
      latency, and local vs. API-hosted. -->
 
 **Model used:**
+
 I will be using the all-miniLM-L6-v2 via sentence-transfomers. I think this embedded model will be effective for embedding the chunks because we are dealing with chunks of short length. In addition to that, this embedding model is also optimized primarily for semantic chunking where it will find similarities semantically on sentences. 
 **Production tradeoff reflection:**
+
 If I were deploying this for real users and cost wasn't a constraint, I would weign in accuracy on domain- specific text and latency. 
 For accuracy on domain-specific text, this is a important tradeoff when choosing another embedding model. the one we selected is optimized for semantic chunking on short text and takes up less time, but it could hinder accuracy compared to more complex and larger models. It may not be able to recognize the meaning of different wording whether that's specific terms like slang words or language that could imply the same thing, but uses different wording. If a different embedding model was selected, it would be a more accurate model that could recognize informal text or sentences  involving different wording that imply the same meaning and would also better recognize relationships between different chunks, allowing for more relevant chunks closer in meaning to be retrieved. 
 Latency is also relevant because we need to make sure the model is generating quck responses, meaning we would have to reduce latency as efficient as possible. Our embedding model is lightweight and of reasonable size and is able to respond quickly. Choosing a larger, and more accurate model that could also be more complex would improve the process of retrieving more relevant and related chunks close in meaning to a query, but could  take up more time to respond. 
@@ -105,9 +114,12 @@ Latency is also relevant because we need to make sure the model is generating qu
 ---
 
 ## Data Retrieval Test Examples:
+
 1. Query: Which professor receives most praise for explaining challenging concepts in a clear manner?
 Explanation: The returned chunks below are relevant to the user query above because each review contains direct language about a professor's ability to make difficult material understandable. Gordon's review mentions projects being "clearly explained" and a genuine desire for students to understand. Daymude's reviews stand out because proofs are inherently challenging, and reviewers specifically credit him with making them enjoyable and being "amazing at breaking down concepts." Claveau's review similarly praises his ability to explain concepts, with students retrospectively wondering why they ever struggled.
+
 **Retrieved Chunks**
+
 Result 1
 Professor: James Gordon
 Review #: 4
@@ -138,7 +150,9 @@ Source: prof3.txt
 
 2. Query: Which professor is frequently described as approachable and supportive, especially when being able to help students outside class?
 Explanation: he returned chunks below are relevant to the user query above because each review speaks to a professor's availability and investment in students beyond the classroom. Gordon is described as "consistently available to answer questions," which directly reflects out-of-class accessibility. Daymude's review is the strongest match, explicitly stating he is "easy to reach outside of class" and even adjusted the course based on student feedback — a clear sign of responsiveness. Claveau is described as "very accessible," and while Daymude's sixth review doesn't mention office hours specifically, the sentiment that he "cares about his students and their experience" still signals the kind of supportive presence the query is looking for.
+
 **Retrieved Chunks**
+
 Result 1
 Professor: James Gordon
 Review #: 4
@@ -207,6 +221,7 @@ Source: prof4.txt
      the mechanism. -->
 
 **System prompt grounding instruction:**
+
 The system enforces grounding at the generation stage by strictly constraining the LLM to only use retrieved chunks returned from ChromaDB. The system prompt explicitly instructs the model that all answers must be based solely on the retrieved reviews and must not use outside knowledge or speculation.
 The core grounding instruction used in the system prompt is:
 
@@ -229,6 +244,7 @@ IMPORTANT RULES:
    "I could not find enough information in the retrieved reviews."
 
 **How source attribution is surfaced in the response:**
+
 Source attribution is handled before the model is called, during context construction. Each retrieved chunk from ChromaDB includes metadata such as the professor name, source filename (e.g., prof1.txt), and the review text.
 
 These fields are formatted into a structured context block that is passed directly into the prompt. For example:
@@ -244,6 +260,40 @@ After the model produces an answer, the system collects the source filenames fro
 These sources are then displayed in the UI under “Sources Used,” allowing users to verify that the response is grounded in specific documents rather than external knowledge.
 
 ---
+
+**Grounded Generation with Source Attribution**
+
+1. First Query: Which professor receives most praise for explaining challenging concepts in a clear manner?
+
+***System Response***:
+Based on the retrieved reviews, Joshua Daymude (prof1.txt) and David Claveau (prof3.txt) receive praise for explaining concepts clearly. However, Joshua Daymude is mentioned as being "amazing at breaking down concepts" and making a class "super enjoyable", suggesting he may receive slightly more praise for this aspect. James Gordon (prof5.txt) is also commended for clearly explaining projects and expectations. Among the retrieved reviews, Joshua Daymude seems to be highlighted for his ability to make complex concepts, such as proofs, enjoyable and clear.
+
+Sources Used
+• prof1.txt
+• prof3.txt
+• prof5.txt
+
+2. Second Query: Which professor appears to leave the best overall impression on students?
+
+***System Response***:
+Based on the retrieved reviews, Joshua Daymude appears to leave a very positive impression on students, with one reviewer calling him "Geniunely the best professor I've had so far at ASU" (prof1.txt) and another stating he is "One of my favorite ASU professors so far" (prof1.txt). Similarly, James Gordon is described as "Amazing professor overall" (prof5.txt) and David Claveau is praised for being "very passionate about what he teaches" (prof3.txt). However, since two reviews praise Joshua Daymude, while the others have one review each, the retrieved reviews suggest that Joshua Daymude may leave the best overall impression on students.
+
+Sources Used
+• prof1.txt
+• prof3.txt
+• prof5.txt
+
+**Out of Scope Query**: Which professor is seen to have the best teaching style in CSE 310?
+
+***System Refusal Response***:
+I could not find enough information in the retrieved reviews.
+
+Sources Used
+• prof10.txt
+• prof3.txt
+• prof7.txt
+
+Grounding Enforced Explanation: Grounding is enforced in the prompt where I tell the Groq LLM that they are a Grounded RAG assistant where it should only used the retrieved context chunks given in the function parameter as its source for the answers it generates. I also emphasize this more then creating certain rules outlining different contraints of how it should be grounded such as "Use ONLY information found in the retrieved reviews", or "Do NOT use outside knowledge" or ."Do NOT invent facts that are not supported by the retrieved reviews". By including these rules, it provides better clarity on how grounding is involved when we are in the geneartion stage of the RAG implementation. 
 
 ## Evaluation Report
 
