@@ -53,11 +53,14 @@ accurate and precise information about professors while getting more grounded an
      - What your final chunk count was across all documents -->
 
 **Chunk size:**
+
 Each document contains 10 reviews for one professor, and each reviews varies in length, roughly between 5-75 words. Each review can be very short and brief or detailed, but not too long in length. Since each review has a different word count and are self-contained, we can treat each review as one chunk so that we can preserve the contents of each student's review about a professor as the reviews can be made by different students.
 That being said, each chunk could be around 20-90 tokens.
 **Overlap:**
+
 The overlap size is 0.
 **Why these choices fit your documents:**
+
 Each student review could be different from other student review within a document, causing reviews to potentially be independent from each other. These reviews could be made from different students, and they may not be related to each other in terms of grading , workload, professor teaching style, and other factors as they could be based on different courses that had different course structures and sometimes students may have different opinions on a professor. For a worse case scenario, it would be recommended to treat each review seperately where in this case, one review would be one chunk. Each review is small in content, which is why we chose the value of chunk size to be around 20-90 tokens, and since we treat each review independently, the overlap would be 0.
 **Final chunk count:**
 Final chunk count is 100 as there are a totla of 100 review across all the 10 files.
