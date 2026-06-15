@@ -72,7 +72,7 @@ I will be using the all-miniLM-L6-v2 via sentence-transfomers. I think this embe
 Top-k is set to 4 since it will help us obtain relevant context that is related to our questionand closest in meaning. This prevents loosely related reviews from being retrieved that could affect the response given. 
 
 **Production tradeoff reflection:**
-If I were deploying this for real users and cost wasn't a constrain, I would weign in accuracy on domain- specific text and latency. 
+If I were deploying this for real users and cost wasn't a constraint, I would weign in accuracy on domain- specific text and latency. 
 For accuracy on domain-specific text, this is a important tradeoff when choosing another embedding model. the one we selected is optimized for semantic chunking on short text and takes up less time, but it could hinder accuracy compared to more complex and larger models. It may not be able to recognize the meaning of different wording whether that's specific terms like slang words or language that could imply the same thing, but uses different wording. If a different embedding model was selected, it would be a more accurate model that could recognize informal text or sentences  involving different wording that imply the same meaning and would also better recognize relationships between different chunks, allowing for more relevant chunks closer in meaning to be retrieved. 
 Latency is also relevant because we need to make sure the model is generating quck responses, meaning we would have to reduce latency as efficient as possible. Our embedding model is lightweight and of reasonable size and is able to respond quickly. Choosing a larger, and more accurate model that could also be more complex would improve the process of retrieving more relevant and related chunks close in meaning to a query, but could  take up more time to respond. 
 
@@ -89,9 +89,9 @@ Latency is also relevant because we need to make sure the model is generating qu
 |---|----------|-----------------|
 | 1 | Which professor receives most praise for explaining challenging concepts in a clear manner? | | Joshua Daymude
 | 2 | Which professor is frequently described as approachable and supportive, especially when being able to help students outside class?| | James Gordon
-| 3 | Which professor receives the most complaints about their curriculum and being difficult with hard or unfair exams?| | Ming Zhao
-| 4 | Which professor is most often criticized for their coursework in terms of excessive workload or too much reading or course structure? | | Ryan Meuth
-| 5 | Which professor receives the most student reviews that describe any course they taught as both difficult and highly rewarding? | | Subbarao Kambhampati
+| 3 | Which professor receives the most complaints about their curriculum and being difficult with hard or unfair exams?| | Ming Zhao or David Claveau
+| 4 | Which professor is most often criticized for their coursework in terms of excessive workload or too much reading or course structure? | | Xuerong Feng
+| 5 | Which professor appears to leave the best overall impression on students? | | Joshua Daymude
 
 ---
 
