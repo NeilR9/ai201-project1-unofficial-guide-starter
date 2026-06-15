@@ -61,6 +61,27 @@ The overlap size is 0.
 Each student review could be different from other student review within a document, causing reviews to potentially be independent from each other. These reviews could be made from different students, and they may not be related to each other in terms of grading , workload, professor teaching style, and other factors as they could be based on different courses that had different course structures and sometimes students may have different opinions on a professor. For a worse case scenario, it would be recommended to treat each review seperately where in this case, one review would be one chunk. Each review is small in content, which is why we chose the value of chunk size to be around 20-90 tokens, and since we treat each review independently, the overlap would be 0.
 **Final chunk count:**
 Final chunk count is 100 as there are a totla of 100 review across all the 10 files.
+**5 Labeled Sample Chunks**
+Professor: Joshua Daymude
+Review #: 1
+Text: Dr. Daymude is one of the most talented professors at ASU. He has devised a curriculum that breaks down a complicated subject into digestible chunks in which the most important aspects are revisited at specific points in the semester. His class is not something you will forget about soon after you finish it.
+--------------------------------------------------------------------------------
+Professor: Bharatesh Chakravarthi
+Review #: 1
+Text: Class is super easy. Allows cheat sheet for exams, and project difficulty is just how lucky you get with the group.
+--------------------------------------------------------------------------------
+Professor: Ryan Meuth
+Review #: 1
+Text: Probably the most organized online course I've ever taken. Material is presented in an easy-to-understand manner through ZyBooks. ZyBooks can be wordy at times though, so just make sure to leave time to read through it. The questions and practice scatter in between the reading help comprehension. If you're not sure, the discuss board can help a lot
+--------------------------------------------------------------------------------
+Professor: David Claveau
+Review #: 1
+Text: My Exam scores were lowered during Finals Week without any notification, luckily I noticed and spoke up but it was very frustrating. I would've finished with a C but got a D because of it. Dr. Claveau blamed the graders and called it small adjustments. Grading is split across platforms and his TAs only show up during Exams, he's very unorganized!
+--------------------------------------------------------------------------------
+Professor: Ming Zhao
+Review #: 1
+Text: Hard class. Don't take if you don't want to put the effort in. Very rewarding and you'll get a lot out of it if you actually spend time to learn material/do the projects legit. I probably learned the most from this class out of any of my upper level/grad classes. Grading is tough and lectures can be hard to follow, but expectations are clear.
+--------------------------------------------------------------------------------
 ---
 
 ## Embedding Model
@@ -79,6 +100,99 @@ For accuracy on domain-specific text, this is a important tradeoff when choosing
 Latency is also relevant because we need to make sure the model is generating quck responses, meaning we would have to reduce latency as efficient as possible. Our embedding model is lightweight and of reasonable size and is able to respond quickly. Choosing a larger, and more accurate model that could also be more complex would improve the process of retrieving more relevant and related chunks close in meaning to a query, but could  take up more time to respond. 
 
 ---
+
+## Data Retrieval Test Examples:
+1. Query: Which professor receives most praise for explaining challenging concepts in a clear manner?
+Explanation: The returned chunks below are relevant to the user query above because each review contains direct language about a professor's ability to make difficult material understandable. Gordon's review mentions projects being "clearly explained" and a genuine desire for students to understand. Daymude's reviews stand out because proofs are inherently challenging, and reviewers specifically credit him with making them enjoyable and being "amazing at breaking down concepts." Claveau's review similarly praises his ability to explain concepts, with students retrospectively wondering why they ever struggled.
+**Retrieved Chunks**
+Result 1
+Professor: James Gordon
+Review #: 4
+Distance: 0.338
+Text: Amazing professor overall. His projects were always clearly explained, and the expectations were very straightforward. He was consistently available to answer questions and genuinely wanted students to understand the material. The class was well organized, and you could tell he cared about helping everyone succeed.
+Source: prof5.txt
+
+Result 2
+Professor: Joshua Daymude
+Review #: 2
+Distance: 0.383
+Text: Incredible professor! Grading is clear, lectures are as engaging as it can get for a class riddled with proofs. Singlehandedly made me enjoy proofs. Assignments are reasonable and helpful. Understands the purpose of the class and there is little shame in asking questions. Prof was given a round of applause on the last day of the semester!
+Source: prof1.txt
+
+Result 3
+Professor: Joshua Daymude
+Review #: 5
+Distance: 0.418
+Text: Geniunely the best professor I've had so far at ASU. Wasn't looking forward to this class, but he makes it super enjoyable and is amazing at breaking down concepts. The only thing I'm not a fan of so far is students grading each other's work.
+Source: prof1.txt
+
+Result 4
+Professor: David Claveau
+Review #: 9
+Distance: 0.424
+Text: Finally, an actual teacher at ASU. He lectures in a very traditional style with slides and walking around that is at times difficult to follow if it's complicated. However, he is very accessible to asking questions and explaining concepts. By the end of the class you'll wonder why you struggled. Apply yourself! He really cares about his students.
+Source: prof3.txt
+
+2. Query: Which professor is frequently described as approachable and supportive, especially when being able to help students outside class?
+Explanation: he returned chunks below are relevant to the user query above because each review speaks to a professor's availability and investment in students beyond the classroom. Gordon is described as "consistently available to answer questions," which directly reflects out-of-class accessibility. Daymude's review is the strongest match, explicitly stating he is "easy to reach outside of class" and even adjusted the course based on student feedback — a clear sign of responsiveness. Claveau is described as "very accessible," and while Daymude's sixth review doesn't mention office hours specifically, the sentiment that he "cares about his students and their experience" still signals the kind of supportive presence the query is looking for.
+**Retrieved Chunks**
+Result 1
+Professor: James Gordon
+Review #: 4
+Distance: 0.385
+Text: Amazing professor overall. His projects were always clearly explained, and the expectations were very straightforward. He was consistently available to answer questions and genuinely wanted students to understand the material. The class was well organized, and you could tell he cared about helping everyone succeed.
+Source: prof5.txt
+
+Result 2
+Professor: Joshua Daymude
+Review #: 8
+Distance: 0.409
+Text: One of my favorite ASU professors so far. Incredibly organized and a great lecturer, which is important for this course. Easy to reach outside of class and even made changes in response to student feedback. Great example of a professor who truly cares about students and their learning. Highly recommend.
+Source: prof1.txt
+
+Result 3
+Professor: David Claveau
+Review #: 9
+Distance: 0.435
+Text: Finally, an actual teacher at ASU. He lectures in a very traditional style with slides and walking around that is at times difficult to follow if it's complicated. However, he is very accessible to asking questions and explaining concepts. By the end of the class you'll wonder why you struggled. Apply yourself! He really cares about his students.
+Source: prof3.txt
+
+Result 4
+Professor: Joshua Daymude
+Review #: 6
+Distance: 0.440
+Text: Easily the best instructor I've had at ASU. His lectures were clear and informative and the homework did a great job of supplementing and reinforcing the material. It's abundantly clear that he cares about his students and their experience. It was incredibly refreshing in a program that seems to care more about pumping people through for profit.
+Source: prof1.txt
+
+3. Which professor receives the most complaints about their curriculum and being difficult with hard or unfair exams?
+
+Result 1
+Professor: Xuerong Feng
+Review #: 6
+Distance: 0.400
+Text: the most frustrating class I have taken. A frustrated professor/TA's when we are collectively confused & don't understand them, difficult / complicated tutorials, lots of figure it out on your own stuff. Programs are also nitpicky and no curved grading, the only thing we have that is considered grace is the extra credit quizzes. 0/10
+Source: prof8.txt
+
+Result 2
+Professor: David Claveau
+Review #: 6
+Distance: 0.458
+Text: Dr. Claveau is one of the worst CS profs at ASU, he clearly favors girls in the class and won't even let kids go to the bathroom during an exam even if it's an emergency. Unlike Gordon who's tests are 10x easier, Claveau's tests are way harder than he makes them seem. I'm sure bro wrote most of the good ratings and reported most if the bad ones.
+Source: prof3.txt
+
+Result 3
+Professor: Subbarao Kambhampati
+Review #: 7
+Distance: 0.463
+Text: The professor mostly just talked about himself and how AI is going to impact the world. He did not seem to actually know the Math that well behind the topics (he would just handwave formulas that he couldn't prove himself). On top of this, he made many rude comments towards certain groups of students. The exam questions usually had multiple answers
+Source: prof9.txt
+
+Result 4
+Professor: Ming Zhao
+Review #: 10
+Distance: 0.468
+Text: CONCEPTS EASY, TESTS ACTUALLY UNFAIR. I wasn't even in his section, but since he's the department chair, Alpha Z actually bullies other teachers for advocating for his students. Both the midterm and bonus quiz are worth an average of 50%. If he can actually get a 95% on his test i will eat my words and say this class is ok.
+Source: prof4.txt
 
 ## Grounded Generation
 

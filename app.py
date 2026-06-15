@@ -13,7 +13,7 @@ def run_ingestion():
         return
     
     chunks, profs = load_file_and_chunk_text("milestone1Doc")
-    """
+
     print("First chunks for First 5 Profs:\n")
     for curProf in profs[0:5]:
         chunk = next(
@@ -25,7 +25,7 @@ def run_ingestion():
         print(f"Text: {chunk['text']}")
         print("-" * 80)
     print(f"\nTotal Chunks Created: {len(chunks)}")
-    """
+    
     if chunks:
         embed_and_store(chunks)
 
